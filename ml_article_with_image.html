@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Machine Learning : bonne ou mauvaise pratique ? - ROURET TIME</title>
+    <style>
+        :root {
+            --bg-color: #fff;
+            --text-color: #333;
+            --header-bg: #fff;
+            --header-border: #000;
+            --nav-bg: #f8f8f8;
+            --nav-border: #ddd;
+            --quote-bg: #f8f8f8;
+            --quote-border: #000;
+            --footer-bg: #000;
+            --footer-text: #fff;
+            --sidebar-bg: #f8f8f8;
+            --sidebar-border: #ddd;
+            --sources-bg: #f0f0f0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background: var(--bg-color);
+            transition: all 0.3s ease;
+        }
+
+        /* Header */
+        .header {
+            border-bottom: 3px solid var(--header-border);
+            padding: 5px 0;
+            background: var(--header-bg);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 48px;
+            font-weight: bold;
+            font-family: 'Old English Text MT', serif;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+
+        .date-weather {
+            font-size: 11px;
+            color: var(--text-color);
+            opacity: 0.7;
+        }
+
+        .nav-menu {
+            background: var(--nav-bg);
+            border-bottom: 1px solid var(--nav-border);
+            padding: 5px 0;
+            transition: all 0.3s ease;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            padding: 3px 0;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            border-bottom-color: var(--header-border);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 800px;
+            margin: 15px auto;
+            padding: 0 10px;
+        }
+
+        .article-header {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #e5e5e5;
+            padding-bottom: 15px;
+        }
+
+        .article-category {
+            font-size: 11px;
+            color: var(--text-color);
+            opacity: 0.7;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .article-title {
+            font-size: 36px;
+            font-weight: bold;
+            line-height: 1.1;
+            margin-bottom: 12px;
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+
+        .article-subtitle {
+            font-size: 16px;
+            color: var(--text-color);
+            opacity: 0.7;
+            font-style: italic;
+            margin-bottom: 15px;
+            line-height: 1.3;
+        }
+
+        .article-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 12px;
+            color: var(--text-color);
+            opacity: 0.7;
+            margin-bottom: 15px;
+        }
+
+        .author {
+            font-weight: bold;
+            color: var(--text-color);
+        }
+
+        .article-content {
+            font-size: 16px;
+            line-height: 1.7;
+            color: var(--text-color);
+        }
+
+        .article-content h2 {
+            font-size: 22px;
+            font-weight: bold;
+            margin: 25px 0 15px 0;
+            color: var(--text-color);
+        }
+
+        .article-content p {
+            margin-bottom: 18px;
+            text-align: justify;
+        }
+
+        .quote-box {
+            background: var(--quote-bg);
+            border-left: 4px solid var(--quote-border);
+            padding: 15px;
+            margin: 20px 0;
+            font-style: italic;
+            font-size: 15px;
+            transition: all 0.3s ease;
+        }
+
+        /* Image styling */
+        .article-image {
+            float: right;
+            margin: 0 0 15px 20px;
+            padding: 10px;
+            background: #f9f9f9;
+            border-radius: 5px;
+            border: 1px solid #e0e0e0;
+            max-width: 300px;
+        }
+
+        .article-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 3px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .image-caption {
+            font-size: 12px;
+            color: var(--text-color);
+            opacity: 0.7;
+            font-style: italic;
+            margin-top: 8px;
+            line-height: 1.3;
+        }
+
+        .sources {
+            background: var(--sources-bg);
+            padding: 15px;
+            margin: 25px 0;
+            border-radius: 5px;
+            font-size: 13px;
+            transition: all 0.3s ease;
+        }
+
+        .sources h3 {
+            font-size: 15px;
+            margin-bottom: 8px;
+            color: var(--text-color);
+        }
+
+        .sources a {
+            color: var(--text-color);
+            text-decoration: underline;
+            opacity: 0.8;
+        }
+
+        .sources a:hover {
+            opacity: 1;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            right: 10px;
+            top: 150px;
+            width: 230px;
+            background: var(--sidebar-bg);
+            padding: 15px;
+            border: 1px solid var(--sidebar-border);
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar h3 {
+            font-size: 15px;
+            margin-bottom: 12px;
+            color: var(--text-color);
+            border-bottom: 2px solid var(--header-border);
+            padding-bottom: 4px;
+        }
+
+        .sidebar-article {
+            margin-bottom: 15px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--sidebar-border);
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .sidebar-article:hover {
+            background-color: rgba(0,0,0,0.05);
+            padding: 8px;
+            border-radius: 5px;
+        }
+
+        .sidebar-article:last-child {
+            border-bottom: none;
+        }
+
+        .sidebar-article h4 {
+            font-size: 13px;
+            margin-bottom: 4px;
+            line-height: 1.2;
+            color: var(--text-color);
+        }
+
+        .sidebar-article p {
+            font-size: 11px;
+            color: var(--text-color);
+            opacity: 0.7;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--footer-bg);
+            color: var(--footer-text);
+            padding: 25px 0;
+            margin-top: 40px;
+            transition: all 0.3s ease;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 10px;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--footer-text);
+            opacity: 0.7;
+            text-decoration: none;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+        }
+
+        .copyright {
+            font-size: 11px;
+            color: var(--footer-text);
+            opacity: 0.6;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .sidebar {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                padding: 0 8px;
+            }
+
+            .logo {
+                font-size: 36px;
+                letter-spacing: 1px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                gap: 12px;
+            }
+
+            .article-title {
+                font-size: 28px;
+            }
+
+            .container {
+                padding: 0 8px;
+                margin: 10px auto;
+            }
+
+            @media (max-width: 768px) {
+                .article-image {
+                    float: none;
+                    margin: 15px auto;
+                    max-width: 280px;
+                    display: block;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">ROURET TIME</div>
+            <div class="date-weather">
+                <div>Mercredi 10 juin 2025</div>
+                <div>Paris 22°C</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav-menu">
+        <div class="nav-content">
+            <div class="nav-links">
+                <a href="#" class="active">Technologie</a>
+                <a href="#">Monde</a>
+                <a href="#">France</a>
+                <a href="#">Économie</a>
+                <a href="#">Sciences</a>
+                <a href="#">Culture</a>
+                <a href="#">Sports</a>
+                <a href="#">Opinion</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Article Header -->
+        <header class="article-header">
+            <div class="article-category">Technologie • Intelligence Artificielle</div>
+            <h1 class="article-title">Machine Learning : bonne ou mauvaise pratique ?</h1>
+            <p class="article-subtitle">Une enquête dans un collège français révèle les perceptions contrastées autour de cette technologie révolutionnaire qui transforme notre quotidien.</p>
+            
+            <div class="article-meta">
+                <span class="author">Par ARSANTO Milan, SANSON Matteo, DOSSANTOS Florian</span>
+                <span class="date">10 juin 2025</span>
+            </div>
+        </header>
+
+        <!-- Article Content -->
+        <article class="article-content">
+            <h2>Introduction</h2>
+            <p>Le Machine Learning est aujourd'hui au cœur de nombreuses avancées technologiques. Il se trouve partout : des voitures autonomes aux moteurs, en passant par les diagnostics médicaux. Mais face à cette évolution rapide, une question se pose : est-ce une bonne ou une mauvaise pratique ? Pour répondre à cette question, nous avons interrogé plusieurs personnes dans notre collège, à la fois dans l'administration et parmi les élèves. Leurs avis nous permettent d'explorer cette technologie avec un regard objectif.</p>
+
+            <h2>Qu'est-ce que le Machine Learning ?</h2>
+            <p>Il est important de rappeler ce qu'est le Machine Learning, car d'après les interviews effectuées, peu de personnes connaissent cette pratique.</p>
+            
+            <div class="quote-box">
+                "Contrairement à un programme classique, un modèle de Machine Learning n'est pas codé ligne par ligne pour résoudre un problème : il apprend à le faire tout seul, à partir d'exemples."
+            </div>
+
+            <div class="article-image">
+                <img src="https://tikz.net/wp-content/uploads/2021/12/neural_networks-002.png" alt="Schéma d'un réseau de neurones artificiels">
+                <div class="image-caption">
+                    Schéma d'un réseau de neurones artificiels
+                </div>
+            </div>
+
+            <p>On peut entraîner un algorithme à reconnaître des visages, détecter des maladies sur des radios médicales ou encore prédire les notes d'un élève selon ses performances précédentes. Par exemple, si on veut l'entraîner à reconnaître des cancers sur des radios médicales, on ne code pas ligne par ligne ce qu'elle doit observer, on lui montre plein de radios et on lui dit si oui ou non le patient est atteint de cancer.</p>
+
+            <h2>Ce que dit l'administration : un atout pour la médecine et l'efficacité</h2>
+            <p>Selon l'administration du collège, le Machine Learning est une bonne pratique, surtout dans des domaines comme la médecine, où on peut entraîner une machine à détecter des cancers ou d'autres maladies grâce aux radiographies. Les réponses mettent en avant une meilleure efficacité des systèmes intelligents, pour analyser de grandes quantités de données plus rapidement qu'un humain.</p>
+
+            <p>L'efficacité est aussi utile dans la gestion des établissements, la détection précoce de difficultés scolaires, ou même l'organisation du travail administratif.</p>
+
+            <h2>Ce que pensent les élèves : performant, mais attention à l'abus</h2>
+            <div class="article-image">
+                <img src="https://www.shutterstock.com/image-vector/oui-et-non-speech-bubble-260nw-1945696174.jpg" alt="Bulles de dialogue Oui et Non">
+                <div class="image-caption">
+                    Les avis partagés des élèves
+                </div>
+            </div>
+            <p>Du côté des élèves, le regard est globalement positif. Beaucoup considèrent le Machine Learning comme une avancée qui améliore la vie quotidienne, avec des outils plus efficaces et performants. Mais certains restent prudents : l'efficacité ne fait pas tout.</p>
+
+            <p>Certains élèves ont souligné que surentraîner les intelligences artificielles pourrait nuire à l'humanité. Cela pourrait faire perdre le contrôle de l'humain à la machine et exécuter des tâches comme bloquer des systèmes ou diffuser de fausses informations, sans validation humaine.</p>
+
+            <h2>Conclusion</h2>
+            <p>En conclusion, le Machine Learning est une technique puissante, mais comme toute pratique, il dépend de la façon dont on l'utilise. Bien encadré, il peut améliorer l'efficacité, la précision et même sauver des vies. Mal utilisé, il peut créer des erreurs graves ou surentraîner l'IA, ce qui ne serait vraiment pas bon pour l'humanité.</p>
+
+            <p>Les interviews réalisées au collège montrent un optimisme global, tant chez l'administration que chez les élèves, surtout en lien avec la performance et les fonctions de ces technologies. Mais pour que le Machine Learning reste une bonne pratique, il faut rester vigilant… et humain.</p>
+
+            <div class="sources">
+                <h3>Sources</h3>
+                <p><strong>Élèves :</strong> Keyla, Jules, Paul, Léana, Mathieu, Ilian, Valentine</p>
+                <p><strong>Administration :</strong> M. Clerc, Mme Henry</p>
+                <p><strong>Journalistes/rédacteurs/reporteurs :</strong> ARSANTO Milan, SANSON Matteo, DOSSANTOS Florian</p>
+                
+                <h3>Références images</h3>
+                <p><strong>Réseau de neurones :</strong> <a href="https://tikz.net/wp-content/uploads/2021/12/neural_networks-002.png" target="_blank">tikz.net</a></p>
+                <p><strong>Bulles Oui/Non :</strong> <a href="https://www.shutterstock.com/image-vector/oui-et-non-speech-bubble-260nw-1945696174.jpg" target="_blank">Shutterstock</a></p>
+            </div>
+        </article>
+    </div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <h3>À la Une</h3>
+        
+        <div class="sidebar-article">
+            <h4>L'IA générative bouleverse l'éducation française</h4>
+            <p>Les établissements scolaires s'adaptent à l'arrivée massive des outils d'intelligence artificielle.</p>
+        </div>
+
+        <div class="sidebar-article">
+            <h4>ChatGPT dans les entreprises : révolution ou risque ?</h4>
+            <p>Une étude révèle l'impact croissant de l'IA conversationnelle sur le monde du travail.</p>
+        </div>
+
+        <div class="sidebar-article">
+            <h4>Voitures autonomes : où en est la France ?</h4>
+            <p>Le point sur les avancées technologiques et réglementaires dans l'Hexagone.</p>
+        </div>
+
+        <div class="sidebar-article">
+            <h4>Médecine prédictive : l'IA au service de la santé</h4>
+            <p>Les algorithmes d'apprentissage automatique transforment le diagnostic médical.</p>
+        </div>
+    </aside>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#">Accueil</a>
+                <a href="#">Monde</a>
+                <a href="#">France</a>
+                <a href="#">Économie</a>
+                <a href="#">Technologie</a>
+                <a href="#">Sciences</a>
+                <a href="#">Culture</a>
+                <a href="#">Sports</a>
+                <a href="#">Opinion</a>
+                <a href="#">Newsletters</a>
+                <a href="#">Podcasts</a>
+                <a href="#">Archives</a>
+            </div>
+            <div class="copyright">
+                © 2025 ROURET TIME Company. Tous droits réservés.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple interactions for navigation
+        document.querySelectorAll('.nav-links a, .footer-links a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                console.log('Navigation clicked:', this.textContent);
+            });
+        });
+
+        // Sidebar interactions
+        document.querySelectorAll('.sidebar-article').forEach(article => {
+            article.addEventListener('click', function(e) {
+                e.preventDefault();
+                console.log('Sidebar article clicked:', this.querySelector('h4').textContent);
+            });
+        });
+
+        // Update date
+        function updateDateTime() {
+            const now = new Date();
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            };
+            const dateString = now.toLocaleDateString('fr-FR', options);
+            const dateElements = document.querySelectorAll('.date-weather div:first-child');
+            dateElements.forEach(el => {
+                el.textContent = dateString.charAt(0).toUpperCase() + dateString.slice(1);
+            });
+        }
+
+        // Initialize
+        updateDateTime();
+        
+        console.log('📰 ROURET TIME - Version avec image Ready');
+    </script>
+</body>
+</html>
